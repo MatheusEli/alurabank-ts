@@ -1,2 +1,2 @@
 # alurabank-ts
-Aplicação WEB de cadastro de negociações feito em <strong>Typescritp</strong> com HTML,CSS e Bootstrap
+Aplicação WEB de cadastro de negociações feito em <strong>Typescript</strong> com HTML,CSS e Bootstrap
