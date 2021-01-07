@@ -3,7 +3,9 @@
         "target": "es6",
         "outDir": "app/js",
         "noEmitOnError": true, 
-        "noImplicitAny": true        
+        "noImplicitAny": true,
+        "removeComments": true,
+        "module":"System"        
     },
     "include": [
         "app/ts/**/*"
