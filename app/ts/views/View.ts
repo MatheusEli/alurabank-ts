@@ -1,3 +1,4 @@
+import { logarTempoDeExecucao } from '../helpers/index';
 export abstract class View<T>{
     
     private _elemento:JQuery;
@@ -8,6 +9,7 @@ export abstract class View<T>{
         this._elemento = $(seletor);
     }
 
+    @logarTempoDeExecucao()
     update(model:T):void{
 
         let template = this.template(model);
