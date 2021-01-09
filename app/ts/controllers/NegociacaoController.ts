@@ -1,6 +1,7 @@
 import { Negociacao, Negociacoes } from '../models/index';
 import { NegociacoesView, MensagemView } from '../views/index';
-import { domInjection } from '../helpers/index';
+import { domInjection, throttle } from '../helpers/index';
+import { NegociacaoParcial } from '../models/index';
 
 export class NegociacaoController {
 
@@ -21,6 +22,7 @@ export class NegociacaoController {
         this._negociacoesView.update(this._negociacoes);
     }
 
+    @throttle()
     adiciona(event: Event) {
 
         event.preventDefault();
@@ -48,6 +50,29 @@ export class NegociacaoController {
         return (data.getDay() != DiaDaSemana.Domingo) && (data.getDay() != DiaDaSemana.Sabado);
     }
 
+
+    @throttle()
+    importarDados() {
+
+        function isOK(res: Response) {
+
+            if (res.ok) {
+                return res;
+            } else {
+                throw new Error(res.statusText);
+            }
+        }
+        fetch('http://localhost:8080/dados')
+            .then(res => isOK(res))
+            .then(res => res.json())
+            .then((dados: NegociacaoParcial[]) => {
+                dados
+                    .map(dado => new Negociacao(new Date(), dado.vezes, dado.montante))
+                    .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            })
+            .catch(err => console.log(err.message));
+    }
 }
 
 enum DiaDaSemana {

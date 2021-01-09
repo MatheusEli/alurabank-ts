@@ -43,6 +43,26 @@ System.register(["../models/index", "../views/index", "../helpers/index"], funct
                 _ehDiaUtil(data) {
                     return (data.getDay() != DiaDaSemana.Domingo) && (data.getDay() != DiaDaSemana.Sabado);
                 }
+                importarDados() {
+                    function isOK(res) {
+                        if (res.ok) {
+                            return res;
+                        }
+                        else {
+                            throw new Error(res.statusText);
+                        }
+                    }
+                    fetch('http://localhost:8080/dados')
+                        .then(res => isOK(res))
+                        .then(res => res.json())
+                        .then((dados) => {
+                        dados
+                            .map(dado => new index_1.Negociacao(new Date(), dado.vezes, dado.montante))
+                            .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
+                    })
+                        .catch(err => console.log(err.message));
+                }
             };
             __decorate([
                 index_3.domInjection('#data')
@@ -53,6 +73,12 @@ System.register(["../models/index", "../views/index", "../helpers/index"], funct
             __decorate([
                 index_3.domInjection('#valor')
             ], NegociacaoController.prototype, "_inputValor", void 0);
+            __decorate([
+                index_3.throttle()
+            ], NegociacaoController.prototype, "adiciona", null);
+            __decorate([
+                index_3.throttle()
+            ], NegociacaoController.prototype, "importarDados", null);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaDaSemana) {
                 DiaDaSemana[DiaDaSemana["Domingo"] = 0] = "Domingo";
