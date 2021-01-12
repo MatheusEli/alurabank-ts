@@ -43,6 +43,7 @@ System.register(["../models/index", "../views/index", "../helpers/index", "../se
                     this._negociacoes.adiciona(negociacao);
                     this._negociacoesView.update(this._negociacoes);
                     this._mensagemView.update("Negociacao adicionada com sucesso!");
+                    index_3.imprime(negociacao, this._negociacoes);
                 }
                 _ehDiaUtil(data) {
                     return (data.getDay() != DiaDaSemana.Domingo) && (data.getDay() != DiaDaSemana.Sabado);

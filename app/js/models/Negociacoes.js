@@ -25,6 +25,10 @@ System.register(["../helpers/index"], function (exports_1, context_1) {
                 paraArray() {
                     return [].concat(this._negociacoes);
                 }
+                paraTexto() {
+                    console.log('-- paraTexto --');
+                    console.log(JSON.stringify(this._negociacoes));
+                }
             };
             __decorate([
                 index_1.logarTempoDeExecucao(true)
