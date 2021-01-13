@@ -31,7 +31,7 @@ export class NegociacoesView extends View<Negociacoes> {
                     
                     </tr>
                     `
-                ).join()}
+                ).join('')}
             </tbody>
 
             <tfoot>
